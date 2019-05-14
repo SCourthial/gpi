@@ -41,10 +41,14 @@ public class Node {
 		if (name.contains(Tree.pathSeparatorString)) {
 			throw new IllegalArgumentException("Contains" + Tree.pathSeparator);
 		}
+		if (parent.child(name) != null) {
+			throw new IllegalStateException("Duplicated children");
+		}
 		this.m_parent = parent;
 		this.m_name = name;
 		this.m_children = new ArrayList<Node>();
 		this.m_attachment = null;
+		this.m_parent.m_children.add(this);
 	}
 
 	public String toString() {

@@ -23,15 +23,21 @@ public class Tree extends Node {
 	 * @throws NotFoundException if the path does not exist
 	 */
 	public Node find(String path) throws NotFoundException {
+		if (!path.contains(pathSeparatorString)) {
+			throw new IllegalArgumentException("Not a tree");
+		}
+
 		String[] path_sep = path.split(pathSeparatorString);
 		int i;
 		Node current = this;
-		for (i = 1 ; i < path_sep.length ; i++) {
-			current = this.child(path_sep[i]);
-			if(current == null) {
+
+		for (i = 1; i < path_sep.length; i++) {
+			current = current.child(path_sep[i]);
+			if (current == null || !current.m_name.equals(path_sep[i])) {
 				throw new NotFoundException("Incorrect path");
 			}
 		}
+
 		return current;
 	}
 
@@ -43,7 +49,42 @@ public class Tree extends Node {
 	 *                               node but it already exists to a leaf.
 	 */
 	public Node makePath(String path, boolean isLeaf) {
-		throw new Error("NYI");
+		if (!path.contains(pathSeparatorString)) {
+			throw new IllegalArgumentException("Not a tree");
+		}
+
+		String[] path_sep = path.split(pathSeparatorString);
+		int i;
+		Node current = this;
+		for (i = 1; i < path_sep.length; i++) {
+			try {
+				Node child = current.child(path_sep[i]);
+				if (child != null) {
+					current = child;
+				} else {
+					if (i == path_sep.length - 1 && isLeaf) {
+						current = new Leaf(current, path_sep[i]);
+					} else {
+						current = new Node(current, path_sep[i]);
+					}
+				}
+			} catch (IllegalStateException ex) {
+				if (i == path_sep.length - 1) {
+					if (isLeaf) {
+						return current;
+					} else {
+						throw new IllegalStateException("Not a leaf");
+					}
+				} else {
+					throw new IllegalStateException("Path with a leaf midway");
+				}
+			}
+		}
+		if ((isLeaf && current instanceof Leaf)
+				|| (!isLeaf && current instanceof Node)) {
+			return current;
+		}
+		throw new IllegalStateException("Wrong type");
 	}
 
 	public String toString() {
