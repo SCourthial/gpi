@@ -2,8 +2,6 @@ package ricm3.gpi.gui.layout;
 
 import ricm3.gpi.gui.Color;
 import ricm3.gpi.gui.Graphics;
-import ricm3.gpi.gui.KeyListener;
-import ricm3.gpi.gui.MouseListener;
 import ricm3.gpi.gui.Window;
 
 /**
@@ -27,7 +25,7 @@ import ricm3.gpi.gui.Window;
  * @author Pr. Olivier Gruber (olivier dot gruber at acm dot org)
  */
 
-public class Component implements MouseListener, KeyListener {
+public class Component {
 
 	protected Container m_parent;
 	protected int m_x, m_y, m_width, m_height; // bounds for this component.
@@ -37,24 +35,15 @@ public class Component implements MouseListener, KeyListener {
 	protected Color m_fgColor; // foreground color for this component
 
 	protected Component() {
-		this.m_parent = null;
-		this.m_x = 0;
-		this.m_y = 0;
-		this.m_width = 0;
-		this.m_height = 0;
-		this.m_bgColor = Color.cyan;
-		this.m_fgColor = Color.pink;
+		m_bgColor = Color.cyan;
+		m_fgColor = Color.black;
 	}
 
 	public Component(Container parent) {
 		this.m_parent = parent;
-		this.m_x = parent.m_x;
-		this.m_y = parent.m_y;
-		this.m_width = 0;
-		this.m_height = 0;
-		this.m_parent.m_children.add(this);
-		this.m_bgColor = Color.cyan;
-		this.m_fgColor = Color.pink;
+		parent.m_children.add(this);
+		m_bgColor = Color.cyan;
+		m_fgColor = Color.black;
 	}
 
 	public String toString() {
@@ -94,14 +83,11 @@ public class Component implements MouseListener, KeyListener {
 	 * @param l
 	 */
 	public void toLocal(Location l) {
-		int dx = 0, dy = 0;
-		Component parent = this;
-		while (parent != null) {
-			dx += parent.m_x;
-			dy += parent.m_y;
-			parent = parent.m_parent;
+		Component tmp = this;
+		while (tmp != null) {
+			l.translate(-tmp.m_x, -tmp.m_y);
+			tmp = tmp.parent();
 		}
-		l.translate(-dx, -dy);
 	}
 
 	/**
@@ -111,26 +97,20 @@ public class Component implements MouseListener, KeyListener {
 	 * @param l
 	 */
 	public void toGlobal(Location l) {
-		int dx = 0, dy = 0;
-		Component parent = this;
-		while (parent != null) {
-			dx += parent.m_x;
-			dy += parent.m_y;
-			parent = parent.m_parent;
+		Component tmp = this;
+		while (tmp != null) {
+			l.translate(tmp.m_x, tmp.m_y);
+			tmp = tmp.parent();
 		}
-		l.translate(dx, dy);
 	}
 
 	public Component parent() {
-		return m_parent;
+		return (Component) this.m_parent;
 	}
 
 	public void remove() {
-		try {
-			this.m_parent.m_children.remove(this);
-		} catch (Exception ex) {
-			throw new IllegalStateException("Remove not allowed");
-		}
+		this.m_parent.m_children.remove(this);
+		this.m_parent = null;
 	}
 
 	public Location location() {
@@ -200,10 +180,7 @@ public class Component implements MouseListener, KeyListener {
 	 * @return
 	 */
 	public boolean inside(int x, int y) {
-		if ((x >= this.m_x && x < this.m_x + this.m_width) && (y >= this.m_y && y < this.m_y + this.m_height)) {
-			return true;
-		}
-		return false;
+		return ((x >= this.m_x) && (x < this.m_x + this.m_width) && (y >= this.m_y) && (y < this.m_y + this.m_height));
 	}
 
 	/**
@@ -215,7 +192,7 @@ public class Component implements MouseListener, KeyListener {
 	 * @return
 	 */
 	public Component select(int x, int y) {
-		if (this.inside(this.m_parent.m_x + x, this.m_parent.m_y + y)) {
+		if ((x >= 0) && (y >= 0) && (x < this.m_width) && (y < this.m_height)) {
 			return this;
 		}
 		return null;
@@ -229,8 +206,8 @@ public class Component implements MouseListener, KeyListener {
 	 */
 	public void paint(Graphics g) {
 		g.setColor(m_bgColor);
-		Location l = new Location(0, 0);
-		toGlobal(l);
+		Location l = new Location(0,0);
+		this.toGlobal(l);
 		g.fillRect(l.x(), l.y(), m_width, m_height);
 	}
 
@@ -245,36 +222,4 @@ public class Component implements MouseListener, KeyListener {
 		win.repaint(l.x(), l.y(), m_width, m_height);
 	}
 
-	@Override
-    public void mouseReleased(int x, int y, int buttons) {
-      System.out.println("mouseReleased"); 
-    }
-
-    @Override
-    public void mousePressed(int x, int y, int buttons) {
-      System.out.println("mousePressed");
-    }
-
-    @Override
-    public void mouseMoved(int x, int y) {
-    }
-
-    @Override
-    public void mouseExited() {
-    }
-
-    @Override
-    public void mouseEntered(int x, int y) {
-    }
-
-	@Override
-	public void keyPressed(char k, int code) {
-	}
-
-	@Override
-	public void keyReleased(char k, int code) {
-	}
-
 }
-
-

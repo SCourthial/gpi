@@ -22,7 +22,6 @@ public class Root extends Container implements MouseListener, KeyListener, Windo
 		m_window = w;
 		m_width = w.getWidth();
 		m_height = w.getHeight();
-		m_selected = null;
 		w.setKeyListener(this);
 		w.setMouseListener(this);
 		w.setWindowListener(this);
@@ -51,9 +50,7 @@ public class Root extends Container implements MouseListener, KeyListener, Windo
 	@Override
 	public void keyPressed(char k, int code) {
 		if (m_selected.m_kl != null) {
-			if (m_selected != null) {
-				m_selected.m_kl.keyPressed(k, code);
-			}
+			m_selected.m_kl.keyPressed(k, code);
 		}
 	}
 
@@ -65,9 +62,7 @@ public class Root extends Container implements MouseListener, KeyListener, Windo
 	@Override
 	public void keyReleased(char k, int code) {
 		if (m_selected.m_kl != null) {
-			if (m_selected != null) {
-				m_selected.m_kl.keyReleased(k, code);
-			}
+			m_selected.m_kl.keyReleased(k, code);
 		}
 	}
 
@@ -81,17 +76,16 @@ public class Root extends Container implements MouseListener, KeyListener, Windo
 	@Override
 	public void mouseMoved(int x, int y) {
 		Component c = select(x, y);
-		System.out.println("Mouse moved : (" + x + ", " + y + ")");
-		if (m_selected.m_ml != null) {
-			if (m_selected != null) {
-				if (!m_selected.equals(c)) {
-					m_selected.m_ml.mouseExited();
-				}
-				if (m_selected != null) {
-					m_selected = c;
-					m_selected.m_ml.mouseEntered(x, y);
-				}
+		if (m_selected != c) {
+			if (m_selected.m_ml != null) {
+				m_selected.m_ml.mouseExited();
 			}
+			if (c.m_ml != null) {
+				c.m_ml.mouseEntered(x, y);
+			}
+			m_selected = c;
+		}
+		if (m_selected != null && m_selected.m_ml != null) {
 			m_selected.m_ml.mouseMoved(x, y);
 		}
 	}
@@ -106,18 +100,17 @@ public class Root extends Container implements MouseListener, KeyListener, Windo
 	@Override
 	public void mousePressed(int x, int y, int buttons) {
 		Component c = select(x, y);
-		System.out.println("Mouse pressed : (" + x + ", " + y + ").  Button : " + buttons);
-		if (m_selected.m_ml != null) {
-			if (m_selected != null) {
-				if (!m_selected.equals(c)) {
-					m_selected.m_ml.mouseExited();
-				}
-				if (m_selected != null) {
-					m_selected = c;
-					m_selected.m_ml.mouseEntered(x, y);
-				}
-				m_selected.m_ml.mousePressed(x, y, buttons);
+		if (m_selected != c) {
+			if (m_selected.m_ml != null) {
+				m_selected.m_ml.mouseExited();
 			}
+			if (c.m_ml != null) {
+				c.m_ml.mouseEntered(x, y);
+			}
+			m_selected = c;
+		}
+		if (m_selected.m_ml != null) {
+			m_selected.m_ml.mousePressed(x, y, buttons);
 		}
 	}
 
@@ -131,18 +124,17 @@ public class Root extends Container implements MouseListener, KeyListener, Windo
 	@Override
 	public void mouseReleased(int x, int y, int buttons) {
 		Component c = select(x, y);
-		System.out.println("Mouse released : (" + x + ", " + y + ").  Button : " + buttons);
-		if (m_selected != null) {
+		if (m_selected != c) {
 			if (m_selected.m_ml != null) {
-				if (!m_selected.equals(c)) {
-					m_selected.m_ml.mouseExited();
-				}
-				if (m_selected != null) {
-					m_selected = c;
-					m_selected.m_ml.mouseEntered(x, y);
-				}
-				m_selected.m_ml.mouseReleased(x, y, buttons);
+				m_selected.m_ml.mouseExited();
 			}
+			if (c.m_ml != null) {
+				c.m_ml.mouseEntered(x, y);
+			}
+			m_selected = c;
+		}
+		if (m_selected != null && m_selected.m_ml != null) {
+			m_selected.m_ml.mouseReleased(x, y, buttons);
 		}
 	}
 
@@ -155,11 +147,8 @@ public class Root extends Container implements MouseListener, KeyListener, Windo
 	@Override
 	public void mouseEntered(int x, int y) {
 		m_selected = select(x, y);
-		System.out.println("Mouse entered : (" + x + ", " + y + ")");
 		if (m_selected.m_ml != null) {
-			if (m_selected != null) {
-				m_selected.m_ml.mouseEntered(x, y);
-			}
+			m_selected.m_ml.mouseEntered(x, y);
 		}
 	}
 
@@ -170,12 +159,10 @@ public class Root extends Container implements MouseListener, KeyListener, Windo
 	 */
 	@Override
 	public void mouseExited() {
-		System.out.println("Mouse exited");
 		if (m_selected.m_ml != null) {
-			if (m_selected != null) {
-				m_selected.m_ml.mouseExited();
-			}
+			m_selected.m_ml.mouseExited();
 		}
+		m_selected = null;
 	}
 
 }
