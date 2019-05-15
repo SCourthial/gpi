@@ -2,8 +2,9 @@ package ricm3.gpi.gui.layout;
 
 import ricm3.gpi.gui.Color;
 import ricm3.gpi.gui.Graphics;
+import ricm3.gpi.gui.KeyListener;
+import ricm3.gpi.gui.MouseListener;
 import ricm3.gpi.gui.Window;
-import warmup.layout.Component;
 
 /**
  * This is a component within a tree of containers and components. Each
@@ -26,7 +27,7 @@ import warmup.layout.Component;
  * @author Pr. Olivier Gruber (olivier dot gruber at acm dot org)
  */
 
-public class Component {
+public class Component implements MouseListener, KeyListener {
 
 	protected Container m_parent;
 	protected int m_x, m_y, m_width, m_height; // bounds for this component.
@@ -244,4 +245,36 @@ public class Component {
 		win.repaint(l.x(), l.y(), m_width, m_height);
 	}
 
+	@Override
+    public void mouseReleased(int x, int y, int buttons) {
+      System.out.println("mouseReleased"); 
+    }
+
+    @Override
+    public void mousePressed(int x, int y, int buttons) {
+      System.out.println("mousePressed");
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+    }
+
+    @Override
+    public void mouseExited() {
+    }
+
+    @Override
+    public void mouseEntered(int x, int y) {
+    }
+
+	@Override
+	public void keyPressed(char k, int code) {
+	}
+
+	@Override
+	public void keyReleased(char k, int code) {
+	}
+
 }
+
+

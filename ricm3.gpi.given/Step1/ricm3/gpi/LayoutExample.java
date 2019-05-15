@@ -35,7 +35,7 @@ public class LayoutExample implements Runnable {
     cont.setMouseListener(new ClickListener("container"));
 
     Component center = new DrawCanvas(cont);
-    center.setBackground(Color.red);
+    center.setBackground(Color.white);
     center.setBounds(50, 50, width, height);
     center.setMouseListener(new ClickListener("center"));
 
@@ -60,41 +60,40 @@ public class LayoutExample implements Runnable {
     bottom.setMouseListener(new ClickListener("bottom"));
     root.repaint();
   }
-
+  
   class ClickListener implements MouseListener {
-    boolean m_down;
-    String m_msg;
+	    boolean m_down;
+	    String m_msg;
 
-    ClickListener(String msg) {
-      m_msg = msg;
-    }
+	    ClickListener(String msg) {
+	      m_msg = msg;
+	    }
 
-    @Override
-    public void mouseReleased(int x, int y, int buttons) {
-      System.out.println("mouseReleased on " + m_msg);
-      if (m_down) {
-        System.out.println(" click detected on " + m_msg);
-        m_down = false;
-      } 
-    }
+	    @Override
+	    public void mouseReleased(int x, int y, int buttons) {
+	      System.out.println("mouseReleased on " + m_msg);
+	      if (m_down) {
+	        System.out.println(" click detected on " + m_msg);
+	        m_down = false;
+	      } 
+	    }
 
-    @Override
-    public void mousePressed(int x, int y, int buttons) {
-      m_down = true;
-      System.out.println("mousePressed on " + m_msg);
-    }
+	    @Override
+	    public void mousePressed(int x, int y, int buttons) {
+	      m_down = true;
+	      System.out.println("mousePressed on " + m_msg);
+	    }
 
-    @Override
-    public void mouseMoved(int x, int y) {
-    }
+	    @Override
+	    public void mouseMoved(int x, int y) {
+	    }
 
-    @Override
-    public void mouseExited() {
-    }
+	    @Override
+	    public void mouseExited() {
+	    }
 
-    @Override
-    public void mouseEntered(int x, int y) {
-    }
+	    @Override
+	    public void mouseEntered(int x, int y) {
+	    }
 
-  }
 }
