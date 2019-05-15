@@ -29,15 +29,15 @@ public class DrawCanvasExample implements Runnable {
 
   @Override
   public void run() {
-    int border = 4;
-    int width = 400;
-    int height = 400;
+    int border = 5;
+    int width = 100;
+    int height = 100;
     m_win = Window.getWindow();
     m_root = new Root(m_win);
     
     Container cont = new Container(m_root);
     cont.setBackground(Color.black);
-    cont.setBounds(50, 50, width+100, height+100);    
+    cont.setBounds(0, 0, width+100, height+100);    
     
     Component center = new DrawCanvas(cont);
     center.setBackground(Color.red);
@@ -45,19 +45,19 @@ public class DrawCanvasExample implements Runnable {
 
     Component top = new Component(cont);
     top.setBackground(Color.green);
-    top.setBounds(50, border, width, 50-border);
+    top.setBounds(50, border, width, 50-2*border);
 
     Component left = new Component(cont);
     left.setBackground(Color.yellow);
-    left.setBounds(border, border, 50-border, height+100-2*border);
+    left.setBounds(border, border, 50-2*border, height+100-2*border);
 
     Component right = new Component(cont);
     right.setBackground(Color.orange);
-    right.setBounds(width+50, border, 50-border, height+100-2*border);
+    right.setBounds(width+50+border, border, 50-2*border, height+100-2*border);
 
     Component bottom = new Component(cont);
     bottom.setBackground(Color.magenta);
-    bottom.setBounds(50, height+50, width, 50-border);
+    bottom.setBounds(50, height+50+border, width, 50-2*border);
 
     m_root.repaint();
   }
