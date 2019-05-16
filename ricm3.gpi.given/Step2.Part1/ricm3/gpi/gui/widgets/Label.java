@@ -45,6 +45,7 @@ public class Label extends Component {
   @Override
   public void paint(Graphics g) {
     super.paint(g);
+    g.drawString(m_chars, 0, m_chars.length, m_x, m_y);
   }
 
 }

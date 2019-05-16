@@ -11,6 +11,7 @@ import ricm3.gpi.gui.layout.Component;
 import ricm3.gpi.gui.layout.Root;
 import ricm3.gpi.gui.widgets.ActionListener;
 import ricm3.gpi.gui.widgets.Button;
+import ricm3.gpi.gui.widgets.Label;
 
 public class ButtonExample implements Runnable {
 
@@ -48,23 +49,35 @@ public class ButtonExample implements Runnable {
 
     i1 = loadImage(m_win, "images/raspberry-pi-color.png");
     i2 = loadImage(m_win, "images/raspberry-pi.png");
-    Button b;
-    b = new Button(root);
-    b.setImages(i1, i2);
-    b.setBounds(0, 0, 50, 50);
-    al = new ButtonListener(b,"Rasp-Pi");
-    b.setActionListener(al);
-
+    
     Font font = m_win.font(Window.MONOSPACED, 12F);
     font = font.derive(Font.ITALIC | Font.BOLD, 24F);
 
     final String label = "Rasp-Pi";
+    
+    Button b;
     b = new Button(root);
+    b.setImages(i1, i2);
+    b.setBounds(50, 50, 50, 50);
     b.setLabel(label);
     b.setFont(font);
-    b.setBounds(50, 0, 200, 50);
-    al = new ButtonListener(b,"Rasp-Pi Label");
+    al = new ButtonListener(b,"Rasp-Pi");
     b.setActionListener(al);
+
+    /*b = new Button(root);
+    b.setLabel(label);
+    b.setFont(font);
+    b.setBounds(50, 50, 200, 50);
+    b.setBackground(Color.black);  
+    al = new ButtonListener(b,"Rasp-Pi Label");
+    b.setActionListener(al);*/
+    
+    Label txt;
+    txt = new Label(root, label);
+    txt.setFont(font);
+    txt.setBounds(100, 100, 0, 0);
+    txt.setBackground(Color.black);    
+    
     root.repaint();
   }
 

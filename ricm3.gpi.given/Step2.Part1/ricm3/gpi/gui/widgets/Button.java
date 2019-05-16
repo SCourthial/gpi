@@ -21,6 +21,7 @@ import ricm3.gpi.gui.layout.Container;
  */
 public class Button extends Component {
 
+	boolean pressed;
 	String m_label;
 	Font m_font;
 	Image m_pressed;
@@ -29,6 +30,8 @@ public class Button extends Component {
 
 	public Button(Container parent) {
 		super(parent);
+		pressed = false;
+		m_label = "";
 	}
 
 	public String getLabel() {
@@ -38,7 +41,12 @@ public class Button extends Component {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.drawImage(m_pressed, m_x, m_y, m_width, m_height);
+		if (pressed) {
+			g.drawImage(m_pressed, m_x, m_y, m_width, m_height);
+		}else {
+			g.drawImage(m_released, m_x, m_y, m_width, m_height);
+		}
+		g.drawString(m_label, m_x, m_y);
 	}
 
 	public void setActionListener(ActionListener al) {
@@ -51,8 +59,6 @@ public class Button extends Component {
 
 	public void setLabel(String txt) {
 		m_label = txt;
-		Window win = Window.getWindow();
-		m_font = win.font(Window.MONOSPACED, 12F);
 	}
 
 	public void setImages(Image released, Image pressed) {
