@@ -45,7 +45,7 @@ public class Label extends Component {
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    throw new Error("Not Yet Implemented");
+    g.drawString(m_chars, 0, m_chars.length, m_x, m_y);
   }
 
 }

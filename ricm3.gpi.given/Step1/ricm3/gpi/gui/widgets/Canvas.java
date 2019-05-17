@@ -34,14 +34,12 @@ public class Canvas extends Component {
 
 	@Override
 	public void paint(Graphics g) {
-			System.out.println("non");
 			g.setColor(m_bgColor);
 			Location l = new Location(0, 0);
 			this.toGlobal(l);
 			g.fillRect(l.x(), l.y(), m_width, m_height);
 			g.setColor(m_fgColor);
 			g.drawLine(x1, y1, x2, y2);
-			System.out.println("What?!!");
 	}
 	
 	public static class CL implements MouseListener {
