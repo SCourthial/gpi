@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package edu.ricm3.game;
-
 public abstract class GameModel {
 
   protected GameUI m_game;

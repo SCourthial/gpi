@@ -9,21 +9,28 @@ public class Ghost extends Sprite {
 		super(model, sprite, rows, columns, x, y, scale, enable_coll);
 		m_scale = scale;
 		movable = true;
-		enable_collision = false;
+		enable_collision = true;
 		splitSprite();
 	}
 	
 	@Override
 	void step(long now) {
-
+		long elapsed = now - m_lastMove;
+		if (elapsed > 10L) {
+			m_lastMove = now;
+			
 			// gravité
-			//gravite();
+			gravite();
 
 			// déplacement
+			m_dx = 1;
+			if(collision(m_dx, 0))
+				jump();
 			move(m_dx, m_dy);
 
 			// explosion
 			explode(now);
+		}
 	}
 
 }

@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package edu.ricm3.game;
-
 public class Options {
   /*
    * You want to use double buffering... 

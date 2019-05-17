@@ -123,22 +123,18 @@ public class Sprite {
 	/*Fait bouger le personnage.*/
 	void move(int x, int y) {
 			if(movable) {
-				if(collisionEnemy(x, y)) {
-					m_canExplode = true;
-				}else {
 					if (!collision(x, 0)) {
 						m_x += x;
 					}
 					if (!collision(0, y)) {
 						m_y += y;
 					}
-				}
 			}
 	}
 	
 	/*Fait sauter le personnage.*/
 	void jump() {
-			if(movable && jump) {
+			if(movable) {
 				if (m_dy == 0) {
 					m_dy = 1;
 				}

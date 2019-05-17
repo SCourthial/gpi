@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package edu.ricm3.game;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;

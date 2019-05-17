@@ -43,6 +43,10 @@ public class Model extends GameModel {
 		int i;
 
 		m_squares = new LinkedList<Square>();
+		m_squares.add(new Square(this, 0, 0, 30, 900, 0, 200 + rand.nextInt(55),
+					70 + rand.nextInt(20), true));
+		m_squares.add(new Square(this, 20 * 200, 0, 30, 900, 0, 200 + rand.nextInt(55),
+				70 + rand.nextInt(20), true));
 		for (i = 0; i < Options.NSQUARES; i++)
 			m_squares.add(new Square(this, i * 200, 500 + rand.nextInt(100), 200, 200, 0, 200 + rand.nextInt(55),
 					70 + rand.nextInt(20), true));
@@ -50,7 +54,7 @@ public class Model extends GameModel {
 
 		m_sprites = new LinkedList<Sprite>();
 		for (i = 0; i < Options.NGHOSTS; i++) {
-			Sprite sp = new Ghost(this, m_cowboySprite, 4, 6, 0, 200, 3F, true);
+			Sprite sp = new Ghost(this, m_cowboySprite, 4, 6, 700, 200, 3F, true);
 			sp.setExplosion(m_explosionSprite, 11, 10);
 			m_sprites.add(sp);
 		}

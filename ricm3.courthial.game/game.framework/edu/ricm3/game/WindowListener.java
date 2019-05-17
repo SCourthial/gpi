@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package edu.ricm3.game;
-
 import java.awt.event.WindowEvent;
 
 public class WindowListener implements java.awt.event.WindowListener {
